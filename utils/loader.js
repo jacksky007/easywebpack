@@ -38,9 +38,6 @@ loader.getStyleLoaderOption = styleConfig => {
   return {
     loaders: loader.cssLoaders(styleConfig),
     preLoaders: {
-      less: 'less-loader',
-      scss: 'sass-loader',
-      sass: 'sass-loader?indentedSyntax',
       stylus: 'stylus-loader'
     }
   };
@@ -80,34 +77,12 @@ loader.getLoaderConfig = (loaderName, styleConfig) => {
 
 loader.getCssLoader = styleConfig => loader.getLoaderConfig('css-loader', styleConfig);
 
-loader.getLessLoader = styleConfig => loader.getLoaderConfig('less-loader', styleConfig);
-
-loader.getSassLoader = styleConfig => loader.getLoaderConfig('sass-loader', styleConfig);
-
 loader.isTrue = value => value !== false;
 
 loader.cssLoaders = styleConfig => {
   const loaderOption = merge({
     css: {
       deps: {
-        postcss: true
-      }
-    },
-    less: {
-      deps: {
-        css: true,
-        postcss: true
-      }
-    },
-    scss: {
-      deps: {
-        css: true,
-        postcss: true
-      }
-    },
-    sass: {
-      deps: {
-        css: true,
         postcss: true
       }
     },
@@ -127,44 +102,6 @@ loader.cssLoaders = styleConfig => {
       extendCssLoader.push('postcss-loader');
     }
     cssLoaders.css = loader.generateLoaders(styleConfig, extendCssLoader);
-  }
-
-  if (loaderOption.less) {
-    const extendLessLoader = [];
-    if (loaderOption.less.deps.css) {
-      extendLessLoader.push('css-loader');
-    }
-    if (loaderOption.less.deps.postcss) {
-      extendLessLoader.push('postcss-loader');
-    }
-    extendLessLoader.push('less-loader');
-    cssLoaders.less = loader.generateLoaders(styleConfig, extendLessLoader);
-  }
-
-  if (loaderOption.scss) {
-    const extendScssLoader = [];
-    if (loaderOption.scss.deps.css) {
-      extendScssLoader.push('css-loader');
-    }
-    if (loaderOption.scss.deps.postcss) {
-      extendScssLoader.push('postcss-loader');
-    }
-    extendScssLoader.push('sass-loader');
-    const scssStyleConfig = merge({}, styleConfig);
-    delete scssStyleConfig.styleLoaderOption.sass.options.indentedSyntax;
-    cssLoaders.scss = loader.generateLoaders(scssStyleConfig, extendScssLoader);
-  }
-
-  if (loaderOption.sass) {
-    const extendSassLoader = [];
-    if (loaderOption.sass.deps.css) {
-      extendSassLoader.push('css-loader');
-    }
-    if (loaderOption.sass.deps.postcss) {
-      extendSassLoader.push('postcss-loader');
-    }
-    extendSassLoader.push('sass-loader');
-    cssLoaders.sass = loader.generateLoaders(styleConfig, extendSassLoader);
   }
 
   if (loaderOption.stylus) {
