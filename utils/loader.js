@@ -86,7 +86,7 @@ loader.cssLoaders = styleConfig => {
         postcss: true
       }
     },
-    stylus: {
+    styl: {
       deps: {
         css: true,
         postcss: true
