@@ -104,16 +104,16 @@ loader.cssLoaders = styleConfig => {
     cssLoaders.css = loader.generateLoaders(styleConfig, extendCssLoader);
   }
 
-  if (loaderOption.stylus) {
+  if (loaderOption.styl) {
     const extendSassLoader = [];
-    if (loaderOption.stylus.deps.css) {
+    if (loaderOption.styl.deps.css) {
       extendSassLoader.push('css-loader');
     }
-    if (loaderOption.stylus.deps.postcss) {
+    if (loaderOption.styl.deps.postcss) {
       extendSassLoader.push('postcss-loader');
     }
     extendSassLoader.push('stylus-loader');
-    cssLoaders.stylus = loader.generateLoaders(styleConfig, extendSassLoader);
+    cssLoaders.styl = loader.generateLoaders(styleConfig, extendSassLoader);
   }
 
   return cssLoaders;
